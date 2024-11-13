@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "fullName": "Alice Johnson",
+        "emailAddress": "alice.johnson@example.com",
+        "contactNumber": "+1234567890",
+        "location": {
+            "streetAddress": "123 Maple St",
+            "cityName": "Springfield",
+            "stateName": "Illinois",
+            "postalCode": "62701"
+        }
+    },
+    {
+        "id": 2,
+        "fullName": "Emily Davis",
+        "emailAddress": "emily.davis@example.com",
+        "contactNumber": "+0987654321",
+        "location": {
+            "streetAddress": "456 Oak St",
+            "cityName": "Greenville",
+            "stateName": "South Carolina",
+            "postalCode": "29601"
+        }
+    },
+    {
+        "id": 3,
+        "fullName": "Sophia Martinez",
+        "emailAddress": "sophia.martinez@example.com",
+        "contactNumber": "+1122334455",
+        "location": {
+            "streetAddress": "789 Pine St",
+            "cityName": "Riverside",
+            "stateName": "California",
+            "postalCode": "92501"
+        }
+    }
+]
