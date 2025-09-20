@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetching Data in the Background</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="dark:bg-gray-900 dark:text-white">
+  <div class="m-8">
+    <h1 class="text-2xl font-bold text-green-500">Fetching Data in the Background</h1>
+    <p class="text-gray-400">In modern web applications, it's common to fetch data in the background to keep the
+      UI responsive and up-to-date. This can be achieved using various techniques such as polling, WebSockets, or
+      server-sent events.</p>
+
+    <div class="mt-8">
+      <div class="flex flex-col gap-2 border border-gray-700 p-2">
+        <div class="flex flex-wrap gap-2">
+          <div class="flex-1 p-4 border border-gray-500">
+            <h1 class="text-lg font-bold text-orange-500">Without State</h1>
+            <div id="container1Data">No data available</div>
+            <div id="container1Status" class="text-green-500"></div>
+          </div>
+
+          <div class="flex-1 p-4 border border-gray-500">
+            <h1 class="text-lg font-bold text-orange-500">With State</h1>
+            <div id="container2Data">No data available</div>
+            <div id="container2Status" class="text-green-500"></div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 border border-gray-700 p-2">
+          <button type="button" class="bg-blue-800 px-2 rounded-md cursor-pointer" onclick="fetchData('first')">On
+            Fetch 1st Time</button>
+          <button type="button" class="bg-blue-800 px-2 rounded-md cursor-pointer" onclick="fetchData('first')">On
+            Page Refresh</button>
+          <button type="button" class="bg-blue-800 px-2 rounded-md cursor-pointer" onclick="fetchData('second')">On
+            Fetch new Data</button>
+          <i class="ms-auto"></i>
+          <input type="number" name="delay" id="delay" class="bg-gray-800 text-white px-2 rounded-md w-20">
+          seconds delay
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <h2 class="text-green-500">What's Happening?</h2>
+        <p class="mb-2 text-gray-400">In the example above, we have two containers that fetch data from an API. The
+          first container fetches data without using any state management, while the second container uses a state
+          management approach to store and update the fetched data.</p>
+        <h3 class="text-green-500">Steps:</h3>
+        <ol class="list-decimal list-inside ms-4">
+          <li>Create a state container to hold the fetched data.</li>
+          <li>Use an effect or middleware to fetch data from the API.</li>
+          <li>Update the state container with the fetched data.</li>
+          <li>Use selectors to access and display the data in the UI.</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <script>
+      function fetchData(type) {
+        container1Status.textContent = 'Loading...';
+        container2Status.textContent = 'Loading...';
+        container1Data.textContent = 'No data available';
+        getAPIData(type).then(data => {
+          container1Data.innerHTML = data;
+          container2Data.innerHTML = data;
+          container1Status.textContent = 'Data loaded';
+          container2Status.textContent = 'Data loaded';
+        });
+      }
+      function getAPIData(type) {
+        const container = document.createElement('ol');
+        container.className = 'list-decimal list-inside ms-4';
+        if (type === 'first') {
+          DATA.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.value}`;
+            container.appendChild(listItem);
+          });
+        } else if (type === 'second') {
+          DATA2.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.value}`;
+            container.appendChild(listItem);
+          });
+        }
+        let d = parseInt(delay.value, 5);
+        if (!isNaN(d) && d > 0) {
+          d = d * 1000;
+        } else {
+          d = DELAY;
+        }
+        console.log({ d });
+
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(`${container.outerHTML}`);
+          }, d);
+        });
+      }
+      const DELAY = 3000; // 3 seconds
+      delay.value = DELAY / 1000;
+      const DATA = [
+        { id: 1, value: 'Item A' }, { id: 2, value: 'Item B' }, { id: 3, value: 'Item C' }
+      ];
+      const DATA2 = [
+        { id: 1, value: 'Item A' }, { id: 2, value: 'Item B' },
+        { id: 1, value: 'Item D' }, { id: 2, value: 'Item E' }, { id: 3, value: 'Item F' }
+      ];
+
+    </script>
+
+</body>
+
+</html>
